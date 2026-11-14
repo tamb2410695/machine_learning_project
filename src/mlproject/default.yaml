@@ -1,0 +1,17 @@
+directory:
+  root: ../..
+  reports: reports  # relative path
+  outputs: outputs
+
+eda:
+  output_subdir: eda
+
+artifacts:
+  output_subdir: artifacts
+  subfolder:
+    experiments:
+      enable: true
+      dir: experiments
+    comparisons:
+      enable: true
+      dir: comparisons

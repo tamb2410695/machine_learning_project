@@ -1,0 +1,50 @@
+directory:
+  root: /data/01-study/2627_CS_....
+  dataset:
+
+dataset:
+  directory: dataset/data.csv
+  name: kerala_house_price
+  target: price
+  feature:
+    numeric:
+      continuous:
+      interpolated_scale:
+    categorical:
+      binary:
+      nominal:
+      ordinal_like:
+
+prepare:
+  clean:
+    enable: true
+  duplicate:
+    enable: true,false
+  split:
+    group: duplicate.enable
+    k_fold: 5,8,10
+    hold_out: 5,8,10
+  transform:
+    enable: true
+    metrics: none,minmax,standard
+
+model:
+  decision_tree:
+    enable: true
+  random_forest:
+    enable: true
+  knn_regressor:
+    enable: true
+  gaussian_nb:
+    enable: true
+
+metrics:
+    mse: none
+    rmse: none
+    r2: none
+
+artifact:
+  experiment:
+    directory:
+  comparison:
+    directory:

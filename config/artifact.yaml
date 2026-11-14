@@ -1,0 +1,65 @@
+artifact:
+  enabled: true
+
+  output_dir: outputs/
+
+  experiment:
+    save_config: true
+    save_metadata: true
+    save_logs: true
+
+  model:
+    save_best_only: true
+    format: joblib
+    filename: best_model.joblib
+
+  evaluation:
+    save_metrics: true
+    save_predictions: true
+    save_residuals: true
+
+    metrics_format: json
+    predictions_format: csv
+
+  reports:
+    save_summary: true
+    save_cv_results: true   # cv: cross-validation
+    save_feature_importance: true
+
+    summary_format: json
+    cv_results_format: csv
+
+  reproducibility:
+    save_random_state: true
+    save_dataset_info: true
+    save_package_versions: true
+
+  cleanup:
+    enabled: false
+    keep_intermediate_files: true
+
+experiment:
+  name: regression_baseline
+  task: regression
+  random_state: 42
+  output_dir: outputs/kerala_house_price
+
+  reproducibility:
+    save_config: true
+    save_environment: true
+
+result:
+  enabled: true
+
+  metrics:
+    - r2
+    - neg_mean_absolute_error
+    - neg_root_mean_squared_error
+
+  selection:
+    primary_metric: neg_root_mean_squared_error
+    strategy: best_score
+
+  comparison:
+    enabled: true
+    rank_models: true

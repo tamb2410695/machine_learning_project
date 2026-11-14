@@ -1,0 +1,74 @@
+clean:
+  missing_values:
+    enabled: true
+    markers: ["", "nan", "null", "none", "na", "n/a"]
+    strategy:
+      numeric: median
+      categorical: most_frequent
+    drop_rows_if_target_missing: true
+
+  duplicates:
+    enabled: true
+    mode: search
+    strategy_candidates:
+      - keep
+      - drop_first
+      - drop_last
+    keep: first
+    subset: null
+
+  validation:
+    enabled: true
+    check_infinite_values: true
+    check_constant_features: true
+    check_duplicate_columns: true
+
+split:
+  holdout:
+    test_size: [0.2, 0.3, 0.4]
+    random_state: 42
+
+  cross_validation:
+    n_splits: [5, 6, 7]
+    random_state: 42
+    shuffle: true
+
+transform:
+  target:
+    transform: none
+
+  numeric:
+    continuous:
+      imputer: median
+      scaler: standard
+
+    discrete:
+      imputer: median
+      scaler: none
+
+  categorical:
+    binary:
+      imputer: most_frequent
+      encoder: one_hot
+      handle_unknown: ignore
+
+    nominal:
+      imputer: most_frequent
+      encoder: one_hot
+      handle_unknown: ignore
+
+    ordinal:
+      imputer: most_frequent
+      encoder: ordinal
+      handle_unknown: ignore
+
+  options:
+    numeric_imputer_candidates: [median, mean]
+    scaler_candidates: [none, standard, minmax]
+    categorical_imputer_candidates: [most_frequent, constant]
+    encoder_candidates: [one_hot]
+
+  feature_selection:
+    enabled: false
+    strategy: variance_threshold
+    threshold: 0.0

@@ -1,0 +1,85 @@
+decision_tree_regressor:
+  id: dt_r
+  name: Decision Tree Regressor
+  enable: true
+  task: regression
+  estimator: DecisionTreeRegressor
+  parameter_grid:
+    max_depth: [null, 5, 10, 20]
+    min_samples_split: [2, 5, 10]
+    min_samples_leaf: [1, 2, 4]
+    criterion:
+      - squared_error
+      - absolute_error
+
+random_forest_regressor:
+  id: rf_r
+  name: Random Forest Regressor
+  enable: true
+  estimator: RandomForestRegressor
+  task: regression
+  parameter_grid:
+    n_estimators: [100, 200]
+    max_depth: [null, 10, 20]
+    min_samples_split: [2, 5]
+    min_samples_leaf: [1, 2]
+    max_features: [1.0, 0.8]
+    random_state: [42]
+
+k_nearest_neighbors_regressor:
+  id: knn_r
+  name: K-Nearest Neighbors Regressor
+  enable: true
+  estimator: KNeighborsRegressor
+  task: regression
+  preprocessing:
+    scaling: standard
+  parameter_grid:
+    n_neighbors: [3, 5, 7, 11]
+    weights:
+      - uniform
+      - distance
+    p: [1, 2]
+
+linear_regression:
+  id: lr
+  name: Linear Regression
+  enable: true
+  estimator: LinearRegression
+  task: regression
+  parameter_grid: {}
+
+ridge_regressor:
+  id: ridge
+  name: Ridge Regression
+  enable: true
+  estimator: Ridge
+  task: regression
+  preprocessing:
+    scaling: standard
+  parameter_grid:
+    alpha: [0.01, 0.1, 1.0, 10.0, 100.0]
+
+gaussian_naive_bayes:
+  id: gnb
+  name: Gaussian Naive Bayes
+  enable: false
+  estimator: GaussianNB
+  task: classification
+  parameter_grid:
+    var_smoothing: [1.0e-11, 1.0e-9, 1.0e-7]
+
+
+adaboost_regressor:
+  id: ada_reg
+  name: Ada Boosting Regressor
+  enabled: true
+  estimator: AdaBoostingRegressor
+  task: regression
+  parameter_grid:
+    estimator:
+      - name: decision_tree_regressor
+        parameter_grid:
+          max_depth: [2, 3, 5]
+    n_estimators: [50, 100]
+    learning_rate: [0.01, 0.1, 1.0]

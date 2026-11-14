@@ -1,0 +1,137 @@
+kerala_house_price:
+  directory: dataset/data.csv
+  # file: data.csv
+  name: Kerala house price
+  supported_tasks: [regression]
+
+  columns:
+    price:
+      description: "Giá căn nhà"
+      role: target
+      expected_dtype: numeric
+      semantic_type: continuous
+      unit: null
+      nullable: false
+      constraints:
+        min: 0
+
+    age:
+      description: "Tuổi căn nhà"
+      role: feature
+      expected_dtype: numeric
+      semantic_type: continuous
+      unit: year
+      nullable: false
+      constraints:
+        min: 0
+
+    area:
+      description: "Diện tích căn nhà"
+      role: feature
+      expected_dtype: numeric
+      semantic_type: continuous
+      unit: null
+      nullable: false
+      constraints:
+        min: 0
+
+    bathrooms:
+      description: "Số phòng tắm"
+      role: feature
+      expected_dtype: numeric
+      semantic_type: discrete
+      unit: count
+      nullable: false
+      constraints:
+        min: 0
+        integer: true
+
+    status:
+      description: "Trạng thái căn nhà"
+      role: feature
+      expected_dtype: string
+      semantic_type: nominal
+      nullable: true
+      allowed_values: []
+
+    atmDistance:
+     description: "Khoảng cách tới ATM"
+     role: feature
+     expected_dtype: numeric
+     semantic_type: continuous
+     unit: null
+     nullable: true
+     constraints:
+       min: 0
+
+    hospitalDistance:
+     description: "Khoảng cách tới bệnh viện"
+     role: feature
+     expected_dtype: numeric
+     semantic_type: continuous
+     unit: null
+     nullable: true
+     constraints:
+       min: 0
+
+    restrauntDistance:
+     description: "Khoảng cách tới nhà hàng"
+     role: feature
+     expected_dtype: numeric
+     semantic_type: continuous
+     unit: null
+     nullable: true
+     constraints:
+       min: 0
+
+    schoolDistance:
+     description: "Khoảng cách tới trường học"
+     role: feature
+     expected_dtype: numeric
+     semantic_type: continuous
+     unit: null
+     nullable: true
+     constraints:
+       min: 0
+
+    shoppingDistance:
+     description: "Khoảng cách tới khu mua sắm"
+     role: feature
+     expected_dtype: numeric
+     semantic_type: continuous
+     unit: null
+     nullable: true
+     constraints:
+       min: 0
+
+    amneties:
+     description: "Số tiện ích"
+     role: feature
+     expected_dtype: numeric
+     semantic_type: discrete
+     unit: count
+     nullable: true
+     constraints:
+       min: 0
+       integer: true
+
+    balconies:
+     description: "Số ban công"
+     role: feature
+     expected_dtype: numeric
+     semantic_type: discrete
+     unit: count
+     nullable: true
+     constraints:
+       min: 0
+       integer: true
+
+  eda:
+    enabled: true
+    checks:
+      - schema    # core
+      - missing_value
+      - duplicate
+      - distributions
+      - outliers
+      - correlations

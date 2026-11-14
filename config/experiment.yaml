@@ -1,0 +1,139 @@
+A_full_dataset_temp:
+  dataset_key: kerala_house_price
+  task: regression
+  target: price
+  features:
+    numeric:
+    categorical:
+
+  preprocessing:
+    clean:
+      enable: true
+      missing_values:
+        strategy_numeric: [median]
+        strategy_categorical: [most_frequent]
+      duplicated:
+        enable: true
+        keep: [first]
+
+    split:
+      # Note: We create a product and do not allow null values for holdout or CV.
+      # A parameter combination of null-null can run, but it contains no data.
+      # An explanation will be provided for this case.
+      holdout: [null, 0.2, 0.3, 0.4]
+      cv: [null, 5, 6, 7, 8]
+
+    transform:
+      # Create ColumnTransformer for Pipline
+      enable: true
+      numeric:
+        impute:
+        scaler: [standard, minmax]
+      categorical:
+        impute:
+        encoder: [one_hot]
+
+  models:
+    - decision_tree_regressor: {}
+    - random_forest_regressor: {}
+    - k_nearest_neighbors_regressor: {}
+    - linear_regression: {}
+    - bagging_regressor:
+      estimator:
+        - decision_tree_regressor
+        - random_forest_regressor
+        - k_nearest_neighbors_regressor
+      parameter_grid:
+        n_estimators: [10, 20, 50]
+        max_samples: [0.7, 1.0]
+
+A_full_dataset:
+  dataset_key: kerala_house_price
+  task: regression
+  target: price
+  features:
+    numeric:
+    categorical:
+
+  preprocessing:
+    clean:
+      enable: true
+      missing_values:
+        strategy_numeric: [median]
+        strategy_categorical: [most_frequent]
+      duplicated:
+        enable: true
+        keep: [first, last]
+
+    split:
+      # Note: We create a product and do not allow null values for holdout or CV.
+      # A parameter combination of null-null can run, but it contains no data.
+      # An explanation will be provided for this case.
+      holdout: [null, 0.2, 0.3, 0.4]
+      cv: [null, 5, 6, 7, 8]
+
+    transform:
+      # Create ColumnTransformer for Pipline
+      enable: true
+      numeric:
+        impute: []
+        scaler: [standard, minmax]
+      categorical:
+        impute: []
+        encoder: [one_hot]
+
+  models:
+    - decision_tree_regressor: {}
+    - random_forest_regressor: {}
+    - k_nearest_neighbors_regressor: {}
+    - linear_regression: {}
+    - bagging_regressor:
+      estimator:
+        - decision_tree_regressor
+        - random_forest_regressor
+        - k_nearest_neighbors_regressor
+      parameter_grid:
+        n_estimators: [10, 20, 50]
+        max_samples: [0.7, 1.0]
+
+  runs:
+    - name: baseline
+      overrides: {}
+    - names: clean_disabled
+      overrides:
+        preprocessing:
+          clean:
+            enable: false
+    - names: duplicate_disabled
+      overrides:
+        preprocessing:
+          clean:
+            duplicate:
+              enable: false
+    - names: transform_disabled
+      overrides:
+        preprocessing:
+          transform:
+            enable: false
+
+B_example:
+  dataset_key: kerala_house_price
+  task: regression
+  target: price
+  features:
+    numeric:
+    categorical:
+
+  preprocessing:
+    clean:
+      enable: true
+
+    split:
+      holdout: []
+      cv: []
+
+    transform:
+      enable: true
+
+  models:
+    - decision_tree_regressor
