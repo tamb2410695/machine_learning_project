@@ -78,7 +78,7 @@ def load_dataset_config(dataset_name: str) -> tuple[dict, Path]:
 def load_preprocessing_config() -> dict:
   return load_config(PREPARE_CONFIG_FILE)
 
-def load_model_config() -> dict:
+def load_models_config() -> dict:
   return load_config(MODEL_CONFIG_FILE)
 
 def load_artifact_config() -> dict:
@@ -89,18 +89,18 @@ def load_experiment_config() -> dict:
 
 def get_experiment_config(experiment_name: str, experiment_config: dict[str, Any]) \
     -> tuple[list[Any], ...]:
-  config: dict[str, Any] = experiment_config.get(experiment_name)
+  config: dict[str, Any] = experiment_config.get(experiment_name, "")
   dataset_key = config.get("dataset_key")
   task = config.get("task")
   dataset_target = config.get("target")
   dataset_features = config.get("features")
 
-  clean_config = config.get("preprocessing").get("clean")
-  split_config = config.get("preprocessing").get("split")
-  transform_config = config.get("preprocessing").get("transform")
+  preprocessing_config = config.get("preprocessing")
+  clean_config = preprocessing_config.get("clean")
+  split_config = preprocessing_config.get("split")
+  transform_config = preprocessing_config.get("transform")
 
-  model_config = config.get("model")
-
+  models_config = config.get("model")
   runs_config = config.get("runs")
   return (
     [
@@ -115,9 +115,27 @@ def get_experiment_config(experiment_name: str, experiment_config: dict[str, Any
       transform_config
     ],
     [
-      model_config
+      models_config
     ],
     [
       runs_config
     ]
+  )
+
+def get_default_config() -> tuple:
+  preprocessing_config = load_preprocessing_config()
+  models_config = load_models_config()
+  clean_config = preprocessing_config.get("clean")
+  split_config = preprocessing_config.get("split")
+  transform_config = preprocessing_config.get("transform")
+
+  return (
+    [
+      clean_config,
+      split_config,
+      transform_config
+    ],
+    [
+      models_config
+    ],
   )

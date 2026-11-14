@@ -1,3 +1,141 @@
+Không khai báo: sử dụng default.
+
+Khai báo một giá trị: sử dụng giá trị đó.
+
+Khai báo danh sách: sinh tổ hợp rồi sử dụng giá trị được chọn.
+
+Khai báo null: ghi đè default bằng None.
+
+Khai báo enabled: false: vô hiệu hóa thành phần tương ứng.
+
+Quy tắc riêng cho enabled
+
+Mình đồng ý với ý tưởng của bạn: những thành phần preprocessing không được khai báo enabled ở cả experiment lẫn default thì mặc định tắt.
+
+Có thể quy định:
+
+Trường hợp
+	
+
+Giá trị
+
+Experiment khai báo enabled: true
+	
+
+Bật
+
+Experiment khai báo enabled: false
+	
+
+Tắt
+
+Experiment không khai báo
+	
+
+Lấy default
+
+Default cũng không khai báo
+	
+
+Tắt
+
+Không nên tự động bật một thành phần chỉ vì các tham số bên trong nó tồn tại.
+
+
+
+
+Config Merger
+	
+
+Merge default, experiment và overrides
+	
+
+Rất cao
+
+Config Validator
+	
+
+Kiểm tra cấu hình trước khi chạy
+	
+
+Rất cao
+
+Configuration Generator
+	
+
+Sinh các tổ hợp preprocessing/model
+	
+
+Đã có
+
+Execution Manager
+	
+
+Quản lý vòng đời execution
+	
+
+Rất cao
+
+Storage Manager
+	
+
+Lưu config, model, metrics, logs
+	
+
+Rất cao
+
+Result Aggregator
+	
+
+Tổng hợp và so sánh kết quả
+	
+
+Cao
+
+Experiment Tracker
+	
+
+Theo dõi experiment, run, execution
+	
+
+Cao
+
+
+Resume Manager
+	
+
+Tiếp tục các execution chưa hoàn thành
+	
+
+Trung bình
+
+Parallel Executor
+	
+
+Chạy nhiều execution đồng thời
+	
+
+Sau này
+
+
+    Dictionary: merge đệ quy.
+    List: thay thế toàn bộ, không nối danh sách.
+    Scalar: giá trị cấp ưu tiên cao hơn ghi đè.
+    null: phải phân biệt giữa chủ động đặt null và không khai báo.
+    enable: false: phải có ý nghĩa vô hiệu hóa rõ ràng.
+
+    parameter_grid: Sinh tổ hợp để tìm kiếm tham số.  
+    preprocessing options: Sinh tổ hợp pipeline.
+    model configurations: Sinh các model cần thử nghiệm.
+    default config: Chỉ cung cấp giá trị mặc định, không tự sinh tổ hợp.
+
+    Chỉ Holdout Train/evaluate từng tổ hợp
+    Chỉ CV Grid Search hoặc CV
+    Holdout + CV CV trên tập train, đánh giá cuối trên holdout
+    Cả hai null Không hợp lệ
+
+
+
 2 type of config:
   Experiment config: save run config
   Default config: default config for python file 
@@ -194,3 +332,4 @@ A_full_dataset:
             parameter_grid:
               n_estimators: [100, 200, 300]
               max_depth: [null, 10, 20]
+

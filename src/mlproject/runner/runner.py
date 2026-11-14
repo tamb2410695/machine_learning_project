@@ -1,22 +1,27 @@
-from mlproject.config import load_experiment_config, get_experiment_config
+from mlproject.config import load_experiment_config, get_experiment_config, get_default_config
 from mlproject.data import loader
 from mlproject.runner.generator import generate_preprocessing_config
 
 def runner(experiment_name: str) -> None:
   experiment_config = load_experiment_config()
   print(experiment_config.get(experiment_name))
+
   (experiment_dataset, experiment_preprocessing,
    experiment_model, experiment_runs) \
     = get_experiment_config(experiment_name, experiment_config)
   dataset_key, _, _, _ = experiment_dataset
   dataset_bundle = loader.load_dataset(dataset_key)
-  # print(dataset_bundle.frame)
-  preprocessing_configs = list(generate_preprocessing_config(experiment_preprocessing))
+
+  preprocessing_default_config, models_default_config = get_default_config()
+
+  preprocessing_configs \
+    = list(
+    generate_preprocessing_config(
+      experiment_preprocessing,
+      list(preprocessing_default_config)
+    )
+  )
   print(preprocessing_configs)
-  # print(experiment_preprocessing)
-  # print(experiment_model)
-  # print(experiment_runs)
-  # eda_section(dataset_bundle.frame, dataset_bundle.columns)
 
 """
   This section is for runs config overrides

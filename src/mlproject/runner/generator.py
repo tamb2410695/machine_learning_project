@@ -1,7 +1,11 @@
 from itertools import product
 import src.mlproject.utils as utils
 
-def generate_cleaning_config(config: dict):
+"""
+  This below is for preprocessing
+"""
+
+def generate_cleaning_config(config: dict, default_config: dict):
   if not config.get("enable", False):
     return [{"enable": False}]
 
@@ -37,7 +41,7 @@ def generate_cleaning_config(config: dict):
     )
   ]
 
-def generate_splitting_config(config: dict):
+def generate_splitting_config(config: dict, default_config: dict):
   return [
     item
     for item in utils.generate_combinations(config)
@@ -47,7 +51,7 @@ def generate_splitting_config(config: dict):
     )
   ]
 
-def generate_transformation_config(config: dict):
+def generate_transformation_config(config: dict, default_config: dict):
   if not config.get("enable", False):
     return [{"enable": False}]
 
@@ -71,28 +75,23 @@ def generate_transformation_config(config: dict):
     )
   ]
 
-def generate_preprocessing_config(config: list):
+def generate_preprocessing_config(config: list, default_config: list):
   cleaning_config, splitting_config, transformation_config = config
+  cleaning_default, splitting_default, transformation_default = default_config
 
   cleaning_configs = generate_cleaning_config(
-    cleaning_config
+    cleaning_config,
+    cleaning_default
   )
 
-  splitting_configs = list(
-    utils.generate_combinations(splitting_config)
+  splitting_configs = generate_splitting_config(
+    splitting_config,
+    splitting_default
   )
-
-  splitting_configs = [
-    item
-    for item in splitting_configs
-    if not (
-      item["holdout"] is None
-      and item["cv"] is None
-    )
-  ]
 
   transformation_configs = generate_transformation_config(
-    transformation_config
+    transformation_config,
+    transformation_default
   )
 
   return [
@@ -107,3 +106,10 @@ def generate_preprocessing_config(config: list):
       transformation_configs
     )
   ]
+
+
+
+"""
+  The below is for models
+"""
+

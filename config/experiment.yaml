@@ -8,12 +8,12 @@ A_full_dataset_temp:
 
   preprocessing:
     clean:
-      enable: true
+      enabled: true
       missing_values:
         strategy_numeric: [median]
         strategy_categorical: [most_frequent]
-      duplicated:
-        enable: true
+      duplicates:
+        enabled: true
         keep: [first]
 
     split:
@@ -25,7 +25,7 @@ A_full_dataset_temp:
 
     transform:
       # Create ColumnTransformer for Pipline
-      enable: true
+      enabled: true
       numeric:
         impute:
         scaler: [standard, minmax]
@@ -57,12 +57,12 @@ A_full_dataset:
 
   preprocessing:
     clean:
-      enable: true
+      enabled: true
       missing_values:
         strategy_numeric: [median]
         strategy_categorical: [most_frequent]
-      duplicated:
-        enable: true
+      duplicates:
+        enabled: true
         keep: [first, last]
 
     split:
@@ -74,12 +74,12 @@ A_full_dataset:
 
     transform:
       # Create ColumnTransformer for Pipline
-      enable: true
+      enabled: true
       numeric:
-        impute: []
+        impute: [null]
         scaler: [standard, minmax]
       categorical:
-        impute: []
+        impute: [null]
         encoder: [one_hot]
 
   models:
@@ -103,18 +103,18 @@ A_full_dataset:
       overrides:
         preprocessing:
           clean:
-            enable: false
-    - names: duplicate_disabled
+            enabled: false
+    - names: duplicates_disabled
       overrides:
         preprocessing:
           clean:
-            duplicate:
-              enable: false
+            duplicates:
+              enabled: false
     - names: transform_disabled
       overrides:
         preprocessing:
           transform:
-            enable: false
+            enabled: false
 
 B_example:
   dataset_key: kerala_house_price
@@ -126,14 +126,14 @@ B_example:
 
   preprocessing:
     clean:
-      enable: true
+      enabled: true
 
     split:
       holdout: []
       cv: []
 
     transform:
-      enable: true
+      enabled: true
 
   models:
     - decision_tree_regressor
